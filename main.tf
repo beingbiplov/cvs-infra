@@ -10,3 +10,10 @@ module "certificates_table" {
   project_name = var.project_name
   environment  = var.environment
 }
+
+module "certificate_lambda" {
+  source = "./modules/lambda"
+
+  project_name = var.project_name
+  environment  = var.environment
+}
