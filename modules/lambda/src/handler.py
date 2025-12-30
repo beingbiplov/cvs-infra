@@ -4,14 +4,18 @@ import uuid
 import boto3
 
 from datetime import datetime, timezone
+from botocore.exceptions import ClientError
 
-# AWS clients
+# Clients
 s3 = boto3.client("s3")
-dynamodb = boto3.resource("dynamodb")
+dynamodb = boto3.client("dynamodb")
 
-UPLOAD_EXPIRY_SECONDS = 300  # 5 minutes
+# Environment variables
 TABLE_NAME = os.environ["CERTIFICATE_TABLE"]
 BUCKET_NAME = os.environ["CERTIFICATE_BUCKET"]
+
+# Presigned URL expiry
+UPLOAD_EXPIRY_SECONDS = 300  # 5 minutes
 
 table = dynamodb.Table(TABLE_NAME)
 
@@ -37,7 +41,7 @@ def lambda_handler(event, context):
         if content_type != "application/pdf":
             return _response(400, {"message": "Invalid content type"})
 
-        # Generate object key
+        # Generate unique ID and S3 key
         file_id = str(uuid.uuid4())
         object_key = f"uploads/{file_id}/{file_name}"
 
@@ -79,10 +83,12 @@ def lambda_handler(event, context):
             }
         )
 
+    except ClientError as e:
+        print("AWS ClientError:", e)
+        return _response(500, {"message": "AWS service error"})
     except Exception as e:
-        print("Error:", str(e))
+        print("Error:", e)
         return _response(500, {"message": "Failed to create upload URL"})
-
 
 # Helper to format HTTP response
 def _response(status_code, body):
