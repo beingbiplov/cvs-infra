@@ -16,6 +16,8 @@ module "certificate_lambda" {
 
   project_name = var.project_name
   environment  = var.environment
+  bucket_arn   = module.certificate_bucket.bucket_arn
+  bucket_name  = module.certificate_bucket.bucket_name
 }
 
 module "certificate_api" {
