@@ -13,13 +13,16 @@ resource "aws_iam_role" "lambda_role" {
   })
 }
 
+# Basic Lambda execution role
 resource "aws_iam_role_policy_attachment" "basic_logs" {
   role       = aws_iam_role.lambda_role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
 
-resource "aws_iam_policy" "lambda_s3_access" {
-  name = "${var.project_name}-${var.environment}-lambda-s3-access"
+# Inline policy for S3 + DynamoDB access
+resource "aws_iam_role_policy" "lambda_access" {
+  name = "${var.project_name}-${var.environment}-lambda-access"
+  role = aws_iam_role.lambda_role.id
 
   policy = jsonencode({
     Version = "2012-10-17"
@@ -32,12 +35,16 @@ resource "aws_iam_policy" "lambda_s3_access" {
           "s3:HeadObject"
         ]
         Resource = "${var.bucket_arn}/uploads/*"
+      },
+      {
+        Effect = "Allow"
+        Action = [
+          "dynamodb:PutItem",
+          "dynamodb:UpdateItem",
+          "dynamodb:GetItem"
+        ]
+        Resource = "*"
       }
     ]
   })
-}
-
-resource "aws_iam_role_policy_attachment" "lambda_s3_access" {
-  role       = aws_iam_role.lambda_role.name
-  policy_arn = aws_iam_policy.lambda_s3_access.arn
 }
