@@ -46,6 +46,10 @@ resource "aws_api_gateway_deployment" "deployment" {
     aws_api_gateway_integration.lambda_integration,
     aws_api_gateway_integration.options_certificates
   ]
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 #  Stage for the API
