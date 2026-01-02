@@ -25,6 +25,9 @@ Expects a JSON body with "fileName" and optional "contentType".
 Records the upload request in DynamoDB with status "PENDING_UPLOAD".
 """
 def lambda_handler(event, context):
+    print("Lambda invoked")
+    print("Event:", event)
+    
     try:
         body = json.loads(event.get("body", "{}"))
 
