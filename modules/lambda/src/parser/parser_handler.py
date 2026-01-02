@@ -1,4 +1,5 @@
 import os
+import json
 import boto3
 import urllib.parse
 
@@ -79,7 +80,7 @@ def lambda_handler(event, context):
             "documentType": "CERTIFICATE",
             "issuer": "Dummy Authority",
             "issuedDate": "2026-01-01",
-            "confidenceScore": Decimal("95.5")
+            "confidenceScore": 95.5
         }
 
         now = datetime.now(timezone.utc).isoformat()
@@ -95,7 +96,7 @@ def lambda_handler(event, context):
             ExpressionAttributeNames={"#s": "status"},
             ExpressionAttributeValues={
                 ":s": "PROCESSED",
-                ":d": extracted_data,
+                ":d": json.dumps(extracted_data),
                 ":p": now
             },
         )
