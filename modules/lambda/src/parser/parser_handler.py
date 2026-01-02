@@ -5,8 +5,8 @@ import urllib.parse
 
 from datetime import datetime, timezone
 
-from src.utils.textExtract import extract_text
-from src.utils.llm import structure_certificate_text
+from utils.textExtract import extract_text
+from utils.llm import structure_certificate_text
 
 MAX_FILE_SIZE_BYTES = 50 * 1024 * 1024  # 50 MB
 PDF_MAGIC = b"%PDF-"
