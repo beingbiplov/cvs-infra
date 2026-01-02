@@ -3,7 +3,7 @@ import json
 
 bedrock = boto3.client("bedrock-runtime", region_name="eu-west-1")
 
-MODEL_ID = "amazon.titan-text-express-v1"
+MODEL_ID = "amazon.nova-micro-v1:0"
 
 def structure_certificate_text(raw_text: str) -> dict:
     """
