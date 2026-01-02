@@ -52,3 +52,27 @@ resource "aws_iam_role_policy" "lambda_access" {
     ]
   })
 }
+
+# Inline policy for Textract access
+resource "aws_iam_policy" "textract_access" {
+  name        = "${var.project_name}-${var.environment}-lambda-textract-access"
+  description = "Allow Lambda to call Textract DetectDocumentText"
+
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect   = "Allow",
+        Action   = [
+          "textract:DetectDocumentText"
+        ],
+        Resource = "*"
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "lambda_textract_attach" {
+  role       = aws_iam_role.lambda_role.name
+  policy_arn = aws_iam_policy.textract_access.arn
+}
