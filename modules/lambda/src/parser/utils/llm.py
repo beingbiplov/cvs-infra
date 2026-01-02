@@ -3,7 +3,7 @@ import json
 
 bedrock = boto3.client("bedrock-runtime")
 
-MODEL_ID = "anthropic.claude-3-haiku-20240307-v1:0"
+MODEL_ID = "amazon.titan-text-express-v1"
 
 def structure_certificate_text(raw_text: str) -> dict:
     """
@@ -33,14 +33,12 @@ def structure_certificate_text(raw_text: str) -> dict:
         """
 
     body = {
-        "anthropic_version": "bedrock-2023-05-31",
-        "max_tokens": 500,
-        "messages": [
-            {
-                "role": "user",
-                "content": prompt
-            }
-        ]
+        "inputText": prompt,
+        "textGenerationConfig": {
+            "maxTokenCount": 500,
+            "temperature": 0,
+            "topP": 1
+        }
     }
 
     response = bedrock.invoke_model(
@@ -51,7 +49,7 @@ def structure_certificate_text(raw_text: str) -> dict:
     )
 
     response_body = json.loads(response["body"].read())
-    output_text = response_body["content"][0]["text"]
+    output_text = response_body["results"][0]["outputText"]
 
     print("LLM raw output:", output_text)
 
