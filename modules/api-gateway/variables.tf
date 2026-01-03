@@ -13,7 +13,7 @@ variable "presign_lambda_name" {
   type        = string
 }
 
-variable "get_certificate_lambda_arn" {
+variable "get_certificate_lambda_invoke_arn" {
   description = "Invoke ARN of the get certificate Lambda"
   type        = string
 }

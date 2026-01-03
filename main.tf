@@ -28,7 +28,7 @@ module "certificate_api" {
   environment                = var.environment
   presign_lambda_invoke_arn  = module.certificate_lambda.invoke_arn
   presign_lambda_name        = module.certificate_lambda.lambda_function_name
-  get_certificate_lambda_arn = module.certificate_lambda.get_certificate_lambda_arn
+  get_certificate_lambda_invoke_arn = module.certificate_lambda.get_certificate_lambda_invoke_arn
   get_certificate_lambda_function_name       = module.certificate_lambda.get_certificate_lambda_function_name
 }
 

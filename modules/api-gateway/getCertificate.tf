@@ -18,7 +18,7 @@ resource "aws_api_gateway_integration" "get_certificate_integration" {
 
   integration_http_method = "POST"
   type                    = "AWS_PROXY"
-  uri                     = var.get_certificate_lambda_arn
+  uri                     = var.get_certificate_lambda_invoke_arn
 }
 
 resource "aws_lambda_permission" "allow_apigw_get" {
