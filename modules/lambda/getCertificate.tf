@@ -1,6 +1,6 @@
 data "archive_file" "get_certificate_lambda_zip" {
   type        = "zip"
-  source_dir  = "${path.module}/src/get_certificate"
+  source_dir  = "${path.module}/src/getCertificate"
   output_path = "${path.module}/get_certificate_lambda.zip"
 }
 
