@@ -21,3 +21,11 @@ output "parser_lambda_arn" {
 output "parser_lambda_invoke_arn" {
   value = aws_lambda_function.certificate_parser.invoke_arn
 }
+
+output "get_certificate_lambda_function_name" {
+  value = aws_lambda_function.get_certificate.function_name
+}
+
+output "get_certificate_lambda_arn" {
+  value = aws_lambda_function.get_certificate.arn
+}
