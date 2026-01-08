@@ -22,3 +22,9 @@ variable "get_certificate_lambda_function_name" {
   description = "Name of the get certificate Lambda"
   type        = string
 }
+
+variable "cognito_user_pool_arn" {
+  description = "Cognito User Pool ARN for API Gateway authorizer"
+  type        = string
+}
+
