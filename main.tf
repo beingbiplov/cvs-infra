@@ -32,4 +32,9 @@ module "certificate_api" {
   get_certificate_lambda_function_name       = module.certificate_lambda.get_certificate_lambda_function_name
 }
 
+module "cognito" {
+  source = "./modules/cognito"
 
+  project_name = var.project_name
+  environment  = var.environment
+}
