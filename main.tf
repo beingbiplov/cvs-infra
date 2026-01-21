@@ -31,6 +31,9 @@ module "certificate_api" {
   get_certificate_lambda_invoke_arn = module.certificate_lambda.get_certificate_lambda_invoke_arn
   get_certificate_lambda_function_name       = module.certificate_lambda.get_certificate_lambda_function_name
 
+  list_certificates_lambda_invoke_arn        = module.certificate_lambda.list_certificates_invoke_arn
+  list_certificates_lambda_function_name     = module.certificate_lambda.list_certificates_function_name
+
   cognito_user_pool_arn = module.cognito.user_pool_arn
 }
 

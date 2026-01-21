@@ -46,6 +46,7 @@ resource "aws_api_gateway_deployment" "deployment" {
       options_get      = aws_api_gateway_method.options_certificate_id.id
       options_get_int  = aws_api_gateway_integration.options_certificate_id.id
       authorizer       = aws_api_gateway_authorizer.cognito.id
+      list_lambda_arn  = var.list_certificates_lambda_invoke_arn
     }))
   }
 
@@ -135,6 +136,6 @@ resource "aws_api_gateway_integration_response" "options_200" {
   response_parameters = {
     "method.response.header.Access-Control-Allow-Origin"  = "'*'"
     "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,Authorization'"
-    "method.response.header.Access-Control-Allow-Methods" = "'POST,OPTIONS'"
+    "method.response.header.Access-Control-Allow-Methods" = "'GET,POST,OPTIONS'"
   }
 }

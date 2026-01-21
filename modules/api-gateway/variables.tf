@@ -28,3 +28,12 @@ variable "cognito_user_pool_arn" {
   type        = string
 }
 
+variable "list_certificates_lambda_invoke_arn" { 
+  description = "Invoke ARN of the list certificates Lambda"
+  type = string 
+}
+
+variable "list_certificates_lambda_function_name" {
+  description = "Name of the list certificates Lambda"
+  type = string
+}
