@@ -46,7 +46,9 @@ resource "aws_api_gateway_deployment" "deployment" {
       options_get      = aws_api_gateway_method.options_certificate_id.id
       options_get_int  = aws_api_gateway_integration.options_certificate_id.id
       authorizer       = aws_api_gateway_authorizer.cognito.id
-      list_lambda_arn  = var.list_certificates_lambda_invoke_arn
+      get_list_method        = aws_api_gateway_method.get_certificates.id
+      get_list_integration   = aws_api_gateway_integration.get_certificates_integration.id
+      list_lambda_invoke_arn = var.list_certificates_lambda_invoke_arn
     }))
   }
 
@@ -56,7 +58,10 @@ resource "aws_api_gateway_deployment" "deployment" {
     aws_lambda_permission.allow_apigw,
     aws_api_gateway_integration.get_certificate_integration,
     aws_api_gateway_integration.options_certificate_id,
-    aws_lambda_permission.allow_apigw_get
+    aws_lambda_permission.allow_apigw_get,  
+    aws_api_gateway_integration.get_certificates_integration,
+    aws_lambda_permission.allow_apigw_list
+
   ]
 
   lifecycle {
