@@ -2,6 +2,7 @@ import os
 import json
 import boto3
 import base64
+from decimal import Decimal
 
 dynamodb = boto3.resource("dynamodb")
 TABLE_NAME = os.environ["CERTIFICATE_TABLE"]
@@ -63,5 +64,12 @@ def _response(status_code, body):
             "Access-Control-Allow-Headers": "Content-Type,Authorization",
             "Access-Control-Allow-Methods": "GET,OPTIONS",
         },
-        "body": json.dumps(body),
+        "body": json.dumps(body, default=_json_default),
     }
+    
+def _json_default(o):
+    if isinstance(o, Decimal):
+        if o % 1 == 0:
+            return int(o)
+        return float(o)
+    raise TypeError(f"Object of type {type(o).__name__} is not JSON serializable")
