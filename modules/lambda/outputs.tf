@@ -32,3 +32,11 @@ output "get_certificate_lambda_arn" {
 output "get_certificate_lambda_invoke_arn" {
   value = aws_lambda_function.get_certificate.invoke_arn
 }
+
+output "list_certificates_invoke_arn" {
+  value = aws_lambda_function.list_certificates.invoke_arn
+}
+
+output "list_certificates_function_name" {
+  value = aws_lambda_function.list_certificates.function_name
+}
